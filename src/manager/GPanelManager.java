@@ -9,6 +9,7 @@ import frames.GDrawingPanel;
 import frames.GFunctionToolBar;
 import frames.GMainFrame;
 import frames.GMenuBar;
+import frames.GRecommendPanel;
 import frames.GShapeToolBar;
 import global.GConstants.EShapeTool;
 import menus.GFileMenu;
@@ -28,6 +29,8 @@ public class GPanelManager {
     @SuppressWarnings("unused")
 	private GBelowPanel belowPanel;
     private GContainer container;
+    // [2026-10-18 수정자: Jung Minkyu] FEAT-01 새 탭의 GDrawingPanel 도 사이드바와 연결되도록 DI
+    private GRecommendPanel recommendPanel;
 
     // constructor
     public GPanelManager(GMainFrame mainFrame) {
@@ -79,6 +82,9 @@ public class GPanelManager {
         fileMenu.associate(panel);
         functionTool.associate(panel);
         colorTool.associate(panel);
+        if (recommendPanel != null) {
+            recommendPanel.associate(panel); // FEAT-01
+        }
     }
 
     // DI 세터들
@@ -107,6 +113,10 @@ public class GPanelManager {
 		this.colorTool = colorTool;
 	}
 	
+	public void setRecommendPanel(GRecommendPanel recommendPanel) {
+		this.recommendPanel = recommendPanel;
+	}
+
 	public void setFileMenu(GMenuBar Parent) {
 		this.fileMenu = Parent.getFileMenu();
 	}

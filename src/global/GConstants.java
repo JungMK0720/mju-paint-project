@@ -60,6 +60,10 @@ public final class GConstants {
 						EFunctionTool.setValues(node);
 					} else if (node.getNodeName().equals(EElement.class.getSimpleName())) {
 						EElement.setValues(node);
+					} else if (node.getNodeName().equals(ERecommend.class.getSimpleName())) {
+						ERecommend.setValues(node); // FEAT-01
+					} else if (node.getNodeName().equals(GRecommender.class.getSimpleName())) {
+						GRecommender.setValues(node); // FEAT-01
 					}
 				}
 			}
@@ -613,6 +617,96 @@ public final class GConstants {
 			return (attrNode != null) ? attrNode.getNodeValue() : "";
 		}
 
+	}
+
+
+	// [2026-10-18 수정자: Jung Minkyu] FEAT-01 추천 사이드바 라벨 (XML <ERecommend> 로 다국어)
+	// 연관: frames/GRecommendPanel.java, recommend/ESuggestShape.java, rsc/*Config.xml
+	public enum ERecommend {
+		eTitle("연관 도형 추천"), eUseLLM("로컬 LLM(Ollama) 사용"), eReanalyze("다시 분석"), eKeep("자유선 유지"),
+		eStatusIdle("자유선을 그리면 비슷한 도형을 추천합니다."), eStatusGeometric("기하 분석 결과입니다. 항목을 누르면 도형으로 바꿉니다."),
+		eStatusAnalyzing("기하 분석 결과입니다. 로컬 LLM 분석 중..."), eStatusLLM("로컬 LLM 결과를 반영했습니다. 항목을 누르면 도형으로 바꿉니다."),
+		eStatusLLMFail("로컬 LLM(Ollama) 에 연결할 수 없어 기하 분석 결과만 표시합니다."),
+		eStatusApplied("도형을 적용했습니다. (Ctrl+Z 로 되돌리기)"), eStatusNoStroke("선택된 자유선이 없습니다."),
+		eLine("직선"), eRectangle("사각형"), eEllipse("타원"), eTriangle("삼각형"), ePolygon("다각형");
+
+		private String label;
+
+		private ERecommend(String label) {
+			this.label = label;
+		}
+
+		public String getLabel() {
+			return label;
+		}
+
+		public static void setValues(Node node) {
+			NodeList children = node.getChildNodes();
+			for (int i = 0; i < children.getLength(); i++) {
+				Node child = children.item(i);
+				if (child.getNodeType() != Node.ELEMENT_NODE)
+					continue;
+				Node labelAttr = child.getAttributes().getNamedItem("label");
+				if (labelAttr == null)
+					continue;
+				for (ERecommend item : values()) {
+					if (item.name().equals(child.getNodeName())) {
+						item.label = labelAttr.getNodeValue();
+					}
+				}
+			}
+		}
+	}
+
+	// [2026-10-18 수정자: Jung Minkyu] FEAT-01 로컬 LLM(Ollama) 설정
+	// 우선순위: 시스템 속성(-Dpaint.ollama.url / model / timeoutMs / enabled) > XML <GRecommender ...> > 기본값
+	// 연관: recommend/GOllamaRecognizer.java, frames/GRecommendPanel.java, rsc/*Config.xml
+	public static final class GRecommender {
+		private static String url = "http://localhost:11434";
+		private static String model = "llama3.2";
+		private static int timeoutMs = 15000;
+		private static boolean enabled = true;
+
+		public static String getUrl() {
+			return System.getProperty("paint.ollama.url", url);
+		}
+
+		public static String getModel() {
+			return System.getProperty("paint.ollama.model", model);
+		}
+
+		public static int getTimeoutMs() {
+			try {
+				return Integer.parseInt(System.getProperty("paint.ollama.timeoutMs", String.valueOf(timeoutMs)));
+			} catch (NumberFormatException e) {
+				return timeoutMs;
+			}
+		}
+
+		public static boolean isEnabled() {
+			return Boolean.parseBoolean(System.getProperty("paint.ollama.enabled", String.valueOf(enabled)));
+		}
+
+		public static void setValues(Node node) {
+			if (node.getAttributes() == null)
+				return;
+			Node a = node.getAttributes().getNamedItem("url");
+			if (a != null && !a.getNodeValue().isEmpty())
+				url = a.getNodeValue();
+			a = node.getAttributes().getNamedItem("model");
+			if (a != null && !a.getNodeValue().isEmpty())
+				model = a.getNodeValue();
+			a = node.getAttributes().getNamedItem("timeoutMs");
+			if (a != null) {
+				try {
+					timeoutMs = Integer.parseInt(a.getNodeValue());
+				} catch (NumberFormatException ignored) {
+				}
+			}
+			a = node.getAttributes().getNamedItem("enabled");
+			if (a != null)
+				enabled = Boolean.parseBoolean(a.getNodeValue());
+		}
 	}
 
 }

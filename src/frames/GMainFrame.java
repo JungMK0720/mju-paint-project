@@ -26,6 +26,10 @@ public class GMainFrame extends JFrame {
 	private GFunctionToolBar functionTool;
 	private GColorToolBar colorTool;
 
+	// [2026-10-18 수정자: Jung Minkyu] FEAT-01 연관 도형 추천 사이드바 (BorderLayout.EAST)
+	// 연관: frames/GRecommendPanel.java, manager/GPanelManager.setRecommendPanel()/associate()
+	private GRecommendPanel recommendPanel;
+
 	// associations
 	// ...
 
@@ -57,10 +61,14 @@ public class GMainFrame extends JFrame {
 		this.drawingPanel = new GDrawingPanel();
 		this.add(drawingPanel, BorderLayout.CENTER);
 
+		this.recommendPanel = new GRecommendPanel();
+		this.add(recommendPanel, BorderLayout.EAST);
+
 		panelManager.setMenuBar(menuBar);
 		panelManager.setToolBar(toolBar);
 		panelManager.setColorBar(colorTool);
 		panelManager.setFunctionBar(functionTool);
+		panelManager.setRecommendPanel(recommendPanel);
 
 		panelManager.addPanel(drawingPanel);
 
@@ -87,6 +95,7 @@ public class GMainFrame extends JFrame {
 		this.functionTool.associate(this.drawingPanel);
 
 		this.menuBar.associate(this.drawingPanel);
+		this.recommendPanel.associate(this.drawingPanel);
 
 		// associated attributes
 		this.setVisible(true);
@@ -95,6 +104,7 @@ public class GMainFrame extends JFrame {
 		this.toolBar.initialize();
 		this.colorTool.initialize();
 		this.functionTool.initialize();
+		this.recommendPanel.initialize();
 
 		this.drawingPanel.initialize();
 

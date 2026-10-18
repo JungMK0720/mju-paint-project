@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GConstants>
-	<EMainFrame eX="200" eY="100" eW="1000" eH="500" />
+	<EMainFrame eX="200" eY="100" eW="1200" eH="600" />
 	<EHelpMenuItem>
 		<eShortcut label="단축키 안내" methodName="showHelpDialog" />
 	</EHelpMenuItem>
@@ -17,7 +17,7 @@
 		<eSaveAs label="다른이름으로" methodName="saveAs" />
 		<eClose label="닫기" methodName="close" />
 		<ePrint label="프린트" methodName="print" />
-		<eExit label="종료" methodName="quit" />
+		<eQuit label="종료" methodName="quit" />
 	</EFileMenuItem>
 	<EEditMenuItem>
 		<eReDo label="다시실행" methodName="새로운 파일을 생성" />
@@ -31,7 +31,7 @@
 	</EEditMenuItem>
 	<EGraphicsMenuItem>
 		<eFontStyle label="글자모양" toolTipText="새로운 파일을 생성" />
-		<elineStyle label="라인모양" toolTipText="새로운 파일을 생성" />
+		<eLineStyle label="라인모양" toolTipText="새로운 파일을 생성" />
 		<eLineColor label="라인색" toolTipText="새로운 파일을 생성" />
 		<eFillColor label="채우기색" toolTipText="새로운 파일을 생성" />
 	</EGraphicsMenuItem>
@@ -107,6 +107,24 @@
 			pertainGroup="eFunction" />
 
 	</EFunctionTool>
-
-
+	<!-- [2026-10-18 수정자: Jung Minkyu] FEAT-01 연관 도형 추천 사이드바 라벨 / 로컬 LLM 설정 -->
+	<ERecommend>
+		<eTitle label="연관 도형 추천" />
+		<eUseLLM label="로컬 LLM(Ollama) 사용" />
+		<eReanalyze label="다시 분석" />
+		<eKeep label="자유선 유지" />
+		<eStatusIdle label="자유선을 그리면 비슷한 도형을 추천합니다." />
+		<eStatusGeometric label="기하 분석 결과입니다. 항목을 누르면 도형으로 바꿉니다." />
+		<eStatusAnalyzing label="기하 분석 결과입니다. 로컬 LLM 분석 중..." />
+		<eStatusLLM label="로컬 LLM 결과를 반영했습니다. 항목을 누르면 도형으로 바꿉니다." />
+		<eStatusLLMFail label="로컬 LLM(Ollama)에 연결할 수 없어 기하 분석 결과만 표시합니다." />
+		<eStatusApplied label="도형을 적용했습니다. (Ctrl+Z 로 되돌리기)" />
+		<eStatusNoStroke label="선택된 자유선이 없습니다." />
+		<eLine label="직선" />
+		<eRectangle label="사각형" />
+		<eEllipse label="타원" />
+		<eTriangle label="삼각형" />
+		<ePolygon label="다각형" />
+	</ERecommend>
+	<GRecommender url="http://localhost:11434" model="llama3.2" timeoutMs="15000" enabled="true" />
 </GConstants>

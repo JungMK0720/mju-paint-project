@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GConstants>
-    <EMainFrame eX="200" eY="100" eW="1000" eH="500" />
+    <EMainFrame eX="200" eY="100" eW="1200" eH="600" />
     <EHelpMenuItem>
         <eShortcut label="ショートカットヘルプ" methodName="showHelpDialog" />
     </EHelpMenuItem>
@@ -16,7 +16,7 @@
         <eSaveAs label="名前を付けて保存"    methodName="saveAs" />
         <eClose  label="閉じる"              methodName="close" />
         <ePrint  label="印刷"                methodName="print" />
-        <eExit   label="終了"                methodName="quit" />
+        <eQuit   label="終了"                methodName="quit" />
     </EFileMenuItem>
     <EEditMenuItem>
         <eReDo    label="やり直し"           methodName="redoAction" />
@@ -82,4 +82,24 @@
         <eToFront  label="前面へ移動"         toolTipText="図形を一つ前面に移動します"       pertainGroup="eFunction" />
         <eToBack   label="背面へ移動"         toolTipText="図形を一つ背面に移動します"       pertainGroup="eFunction" />
     </EFunctionTool>
+	<!-- [2026-10-18 Jung Minkyu] FEAT-01 関連図形おすすめサイドバーのラベル / ローカルLLM設定 -->
+	<ERecommend>
+		<eTitle label="関連図形のおすすめ" />
+		<eUseLLM label="ローカルLLM(Ollama)を使う" />
+		<eReanalyze label="再分析" />
+		<eKeep label="自由線のまま" />
+		<eStatusIdle label="自由線を描くと似た図形をおすすめします。" />
+		<eStatusGeometric label="幾何分析の結果です。項目を押すと図形に変換します。" />
+		<eStatusAnalyzing label="幾何分析の結果です。ローカルLLMで分析中..." />
+		<eStatusLLM label="ローカルLLMの結果を反映しました。項目を押すと図形に変換します。" />
+		<eStatusLLMFail label="ローカルLLM(Ollama)に接続できないため幾何分析の結果のみ表示します。" />
+		<eStatusApplied label="図形を適用しました。(Ctrl+Z で元に戻す)" />
+		<eStatusNoStroke label="選択された自由線がありません。" />
+		<eLine label="直線" />
+		<eRectangle label="四角形" />
+		<eEllipse label="楕円" />
+		<eTriangle label="三角形" />
+		<ePolygon label="多角形" />
+	</ERecommend>
+	<GRecommender url="http://localhost:11434" model="llama3.2" timeoutMs="15000" enabled="true" />
 </GConstants>

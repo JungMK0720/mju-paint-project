@@ -26,6 +26,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import frames.GDrawingPanel;
 import global.GConstants.EFileMenuItem;
+import global.GConstants.EMenu;
 import global.GConstants.GFilePath;
 import manager.GProcessManager;
 
@@ -40,8 +41,11 @@ public class GFileMenu extends JMenu {
 	private GDrawingPanel drawingpanel;
 	private GProcessManager processManager;
 
+	// [2026-10-18 수정자: Jung Minkyu] FIX-11
+	// As-Is: XML 의 <EMenu><eFileMenu label="파일"/> 을 읽어 두고도 "File" 을 하드코딩해 메뉴 이름만 다국어가 안 됐다.
+	// To-Be: 로드된 라벨이 있으면 사용. 연관: global/GConstants.EMenu, rsc/*Config.xml
 	public GFileMenu() {
-		super("File");
+		super(EMenu.eFileMenu.getValue().isEmpty() ? "File" : EMenu.eFileMenu.getValue());
 		ActionHandler actionHandler = new ActionHandler();
 		for (EFileMenuItem emenuItem : EFileMenuItem.values()) {
 			JMenuItem menuItem = new JMenuItem(emenuItem.getName());

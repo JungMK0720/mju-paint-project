@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GConstants>
-	<EMainFrame eX="200" eY="100" eW="1000" eH="500" />
+	<EMainFrame eX="200" eY="100" eW="1200" eH="600" />
 	<EHelpMenuItem>
 		<eShortcut label="Shortcut Help" methodName="showHelpDialog" />
 	</EHelpMenuItem>
@@ -17,7 +17,7 @@
 		<eSaveAs label="Save As..." methodName="saveAs" />
 		<eClose label="Close" methodName="close" />
 		<ePrint label="Print" methodName="print" />
-		<eExit label="Exit" methodName="quit" />
+		<eQuit label="Exit" methodName="quit" />
 	</EFileMenuItem>
 	<EEditMenuItem>
 		<eReDo label="Redo" methodName="redoAction" />
@@ -113,4 +113,24 @@
 		<eToBack label="Send Backward"
 			toolTipText="Send shape one step backward" pertainGroup="eFunction" />
 	</EFunctionTool>
+	<!-- [2026-10-18 Jung Minkyu] FEAT-01 related-shape recommendation sidebar labels / local LLM settings -->
+	<ERecommend>
+		<eTitle label="Related Shapes" />
+		<eUseLLM label="Use local LLM (Ollama)" />
+		<eReanalyze label="Re-analyze" />
+		<eKeep label="Keep stroke" />
+		<eStatusIdle label="Draw a freehand stroke to get shape suggestions." />
+		<eStatusGeometric label="Geometric analysis. Click an item to convert." />
+		<eStatusAnalyzing label="Geometric analysis shown. Asking local LLM..." />
+		<eStatusLLM label="Local LLM result applied. Click an item to convert." />
+		<eStatusLLMFail label="Local LLM (Ollama) unreachable; showing geometric analysis only." />
+		<eStatusApplied label="Shape applied. (Ctrl+Z to undo)" />
+		<eStatusNoStroke label="No freehand stroke selected." />
+		<eLine label="Line" />
+		<eRectangle label="Rectangle" />
+		<eEllipse label="Ellipse" />
+		<eTriangle label="Triangle" />
+		<ePolygon label="Polygon" />
+	</ERecommend>
+	<GRecommender url="http://localhost:11434" model="llama3.2" timeoutMs="15000" enabled="true" />
 </GConstants>

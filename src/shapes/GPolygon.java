@@ -32,9 +32,18 @@ public class GPolygon extends GShape implements Serializable {
 		this.polygon.addPoint(x, y);
 	}
 
+	// [2026-10-18 수정자: Jung Minkyu] FEAT-01
+	// 추천 도형을 적용할 때 꼭짓점 목록으로 다각형을 한 번에 만들기 위한 편의 메서드.
+	// 연관: recommend/ESuggestShape.java
+	public void setVertices(int[] xs, int[] ys, int n) {
+		this.polygon.reset();
+		for (int i = 0; i < n; i++) {
+			this.polygon.addPoint(xs[i], ys[i]);
+		}
+	}
+
 	@Override
 	public Rectangle getSideBounds() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }
